@@ -1,0 +1,229 @@
+@startuml
+class org.demo.app.disney.model.BlockOutCalendarDate {
+- String blockOutCalendarCode
+- Timestamp blockOutDate
+- Timestamp createdOn
+- String createdBy
+- Timestamp updatedOn
+- String updatedBy
+- BlockOutCalendar blockOutCalendar
+}
+
+class org.demo.app.disney.model.MarketGroup {
+- String marketGroupCode
+- String marketGroupName
+- Timestamp createdOn
+- String createdBy
+- Timestamp updatedOn
+- String updatedBy
+- List<Market> marketList
+}
+
+class org.demo.app.disney.model.ProductChannel {
+- String productChannelId
+- String productCode
+- String channelMapCode
+- Timestamp createdOn
+- String createdBy
+- Timestamp updatedOn
+- String updatedBy
+~ Product product
+~ ChannelMap channelMap
+}
+
+class org.demo.app.disney.model.ChannelMap {
+- String channelMapCode
+- String channelMapName
+- String marketCode
+- String distributionChannelCode
+- Timestamp createdOn
+- String createdBy
+- Timestamp updatedOn
+- String updatedBy
+- List<ProductChannel> productChannelList
+- Market market
+- DistributionChannel distributionChannel
+}
+
+class org.demo.app.disney.model.Market {
+- String marketCode
+- String marketName
+- String marketGroupCode
+- Timestamp createdOn
+- String createdBy
+- Timestamp updatedOn
+- String updatedBy
+- List<ChannelMap> channelMapList
+~ MarketGroup marketGroup
+}
+
+class org.demo.app.disney.model.BundleCategory {
+- String bundle_category_id
+- String productTemplateCode
+- String classificationCode
+- boolean isOptional
+- boolean isSelectable
+- int maxSelection
+- Timestamp createdOn
+- String createdBy
+- Timestamp updatedOn
+- String updatedBy
+- ProductTemplate productTemplate
+- List<TemplateBundleComponent> templateBundleComponentList
+- List<ProductBundleComponent> productBundleComponentList
+}
+
+class org.demo.app.disney.model.BlockOutCalendar {
+- String blockOutCalendarCode
+- String blockOutCalendarName
+- boolean inactive
+- Timestamp createdOn
+- String createdBy
+- Timestamp updatedOn
+- String updatedBy
+- List<BlockOutCalendarDate> blockOutCalendarDates
+}
+
+class org.demo.app.disney.model.ProductTemplateAge {
+- String productAgeId
+- String productTemplateCode
+- String ageCode
+- Timestamp createdOn
+- String createdBy
+- Timestamp updatedOn
+- String updatedBy
+- ProductTemplate productTemplate
+}
+
+class org.demo.app.disney.model.ProductTemplate {
+- String productTemplateCode
+- String productTemplateName
+- String classificationCode
+- String statusCode
+- int inactive
+- Timestamp created_on
+- String created_by
+- Timestamp updated_on
+- String updated_by
+- List<Product> productList
+- List<ProductTemplateLocation> productTemplateLocationList
+- List<ProductTemplateAttribute> productTemplateAttributeList
+- List<ProductTemplateDuration> productTemplateDurationList
+- List<ProductTemplateAge> productTemplateAgeList
+- List<BundleCategory> bundleCategoryList
+- List<TemplateBundleComponent> templateBundleComponentList
+}
+
+class org.demo.app.disney.model.DistributionChannel {
+- String distributionChannelName
+- String distributionChannelCode
+- Timestamp createdOn
+- String createdBy
+- Timestamp updatedOn
+- String updatedBy
+- List<ChannelMap> channelMapList
+}
+
+class org.demo.app.disney.model.ProductTemplateDuration {
+- String productTemplateCode
+- int duration
+- Timestamp createdOn
+- String createdBy
+- Timestamp updatedOn
+- String updatedBy
+- ProductTemplate productTemplate
+}
+
+class org.demo.app.disney.model.Product {
+- String productCode
+- String productName
+- String productTemplateCode
+- String statusCode
+- Date salesStartDate
+- Date salesEndDate
+- Date usageStartDate
+- Date usageEndDate
+- String blockOutCalendarCode
+- BlockOutCalendar blockOutCalendar
+- Timestamp createdOn
+- String createdBy
+- Timestamp updatedOn
+- String updatedBy
+- ProductTemplate productTemplate
+- List<ProductBundleComponent> productBundleComponentList
+- List<ProductSetProduct> productSetProducts
+- List<ProductChannel> productChannels
+}
+
+class org.demo.app.disney.model.ProductSet {
+- String productSetCode
+- String productSetName
+- Timestamp createdOn
+- String createdBy
+- Timestamp updatedOn
+- String updatedBy
+- List<ProductSetProduct> productSetProducts
+}
+
+class org.demo.app.disney.model.TemplateBundleComponent {
+- String templateBundleComponentId
+- String bundleCategoryId
+- String productTemplateCode
+- String componentProductTemplateCode
+- Timestamp createdOn
+- String createdBy
+- Timestamp updatedOn
+- String updatedBy
+- ProductTemplate productTemplate
+- BundleCategory bundleCategory
+}
+
+class org.demo.app.disney.model.ProductTemplateLocation {
+- String productTemplateLocationId
+- String productTemplateCode
+- String locationCode
+- Timestamp createdOn
+- String createdBy
+- Timestamp updatedOn
+- String updatedBy
+- ProductTemplate productTemplate
+}
+
+class org.demo.app.disney.model.ProductTemplateAttribute {
+- String productTemplateAttributeId
+- String productTemplateCode
+- String attributeCode
+- String productAttributeValue
+- Timestamp createdOn
+- String createdBy
+- Timestamp updatedOn
+- String updatedBy
+- ProductTemplate productTemplate
+}
+
+class org.demo.app.disney.model.ProductSetProduct {
+- String productSetId
+- String productSetCode
+- String productCode
+- Timestamp createdOn
+- String createdBy
+- Timestamp updatedOn
+- String updatedBy
+- Product product
+~ ProductSet productSet
+}
+
+class org.demo.app.disney.model.ProductBundleComponent {
+- String productBundleComponentId
+- String bundleCategoryId
+- String productCode
+- String componentProductCode
+- Timestamp createdOn
+- String createdBy
+- Timestamp updatedOn
+- String updatedBy
+- Product product
+- BundleCategory bundleCategory
+}
+
+@enduml

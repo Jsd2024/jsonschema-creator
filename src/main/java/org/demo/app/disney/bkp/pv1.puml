@@ -1,0 +1,146 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+skinparam {
+NoteBorderColor  #FF33C1
+sequence {
+ArrowColor #d3809b
+LifeLineBorderColor Black
+ParticipantBorderColor #FF33C1
+ParticipantBackgroundColor #ffffcf
+ParticipantFontName Times New Roman
+ParticipantFontSize 15
+ParticipantFontColor black
+}
+}
+Client  -> DisneyOffer: GetOffer Request
+note right Client
+Scoring - Specifies whether this is SHALLOW_SEARCH
+ResortStayStartDate - Start Date of Travel
+ResortStayEndDate - End Date of Travel
+PartyMix - No of adult / children
+ProductMix - Optional. Used to specify rate plan and a specific hotel / room type
+end note
+
+RoomHandler -> RoomAvailabilityService: Room Availability Request
+note right RoomHandler
+  PAX
+  Service Dates
+  Marketing Offer(Optional)
+  Plan Type(Optional)
+  Product Codes
+  OfferId(Optional)
+  ReservationDetails(Optional)
+   - Resort(s)
+   - Resort Group(s)
+   - Room Type(s)
+   - Dates
+  Party Mix
+  end note
+
+RoomHandler -> RoomAvailabilityService: Bid Price Snapshots
+note right RoomHandler
+  PAX
+  Service Dates
+  Marketing Offer
+  ChannelMap
+  PlanType
+  ProductCodes
+  OverridingControlParams
+  CommissionGroupDetails
+  ModificationRules
+end note
+
+
+RDSI -> RoomAvailabilityService: Send Bid Price
+activate RoomAvailabilityService #FFBBBB
+note left RDSI
+   Resort Code
+   Room Type
+   Service Date
+   Authorized Count
+   Currency
+   Bid Price Value
+end note
+RDSI <- RoomAvailabilityService: Send Acknowledgement
+deactivate RoomAvailabilityService #FFBBBB
+
+RDSI -> RoomAvailabilityService: Send Product Value
+activate RoomAvailabilityService #FFBBBB
+note left RDSI
+  Resort Code
+  Room Type
+  Service Date
+  Rate Plan
+  Base Product Value Rate
+  Base Product Value Discount
+  Fixed Channel Cost
+  Commissions
+  Adjustment-Product Value Override Amount
+  Yield Adjustment(Strat Value)
+  Cleaning Cost
+  Full Override-Fixed Product Value
+  Full Override-Yield As
+  Full Override-Bid Price Bypass
+  Full Override-Product Box
+end note
+RDSI <- RoomAvailabilityService: Send Acknowledgement
+deactivate RoomAvailabilityService #FFBBBB
+
+
+InventoryService->RoomAvailabilityService : Send Authorized Availability to RoomAvailabilityService
+activate RoomAvailabilityService #FFBBBB
+InventoryService<-RoomAvailabilityService : Send Acknowledgement
+deactivate RoomAvailabilityService #FFBBBB
+
+InventoryService<-TBX_AIM : Inv updates: Pull Inventory  Availability
+activate InventoryService #FFBBBB
+note right InventoryService
+  Service Date
+  Accom Code
+  Room Code
+  Auth Count
+  Block Count
+  Book Count
+  Hold Count
+  Boxed,OOOOTM Count
+  Block Adj Count
+  Netting Adj Count
+  Last Modified
+end note
+InventoryService->TBX_AIM : Inv updates: Send Acknowledgement
+deactivate InventoryService #FFBBBB
+RDSI <- IDeaS: LRV Prod Value Rate
+'AvailabilityPriceGrid -> RoomAvailabilityService: Update the AvailabilityGrid
+'activate RoomAvailabilityService #FFBBBB
+'AvailabilityPriceGrid <- RoomAvailabilityService: AvailabilityGrid updated
+'deactivate RoomAvailabilityService #FFBBBB
+RoomAvailabilityService -> RoomAvailabilityService: Calculate Auth Availability & FPLOS Availability
+activate RoomAvailabilityService #FFBBBB
+deactivate RoomAvailabilityService #FFBBBB
+
+RoomAvailabilityService<-RDSI: Bid Price & Product Value Comparison Based on K-Factor
+activate RoomAvailabilityService #FFBBBB
+note left RDSI
+   Resort Type
+   Start Rating
+   Location
+   Resort
+   Room Type
+   Calculated Bid Price Value
+   Discount Category (SP1,SP2,SP3,SP4)
+   Price Rate:
+        - Package Rate
+        - Rack Rate
+        - Calculated K-Factor [Yield Adjustment]
+        - Calculated Rate Category
+   Start Date & End Date
+   Hybrid Market
+   Package
+   LOS
+   Quantity
+
+end note
+RDSI <- RoomAvailabilityService: Send Acknowledgement
+deactivate RoomAvailabilityService #FFBBBB
+
+@enduml

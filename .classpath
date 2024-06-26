@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="org/demo/app/controller/" kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/java/org/demo/app/controller"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="lib" path="target/demo-test-0.0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/UMLDesigner"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>
